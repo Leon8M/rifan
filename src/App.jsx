@@ -2,7 +2,6 @@ import Header from './sections/Header';
 import Hero from './sections/Hero';
 import Services from './sections/Services';
 import Portfolio from './sections/Portfolio';
-import Process from './sections/Process';
 import Testimonials from './sections/Testimonials';
 import Contact from './sections/Contact';
 import Footer from './sections/Footer';
@@ -15,7 +14,6 @@ function App() {
         <Hero />
         <Services />
         <Portfolio />
-        <Process />
         <Testimonials />
         <Contact />
       </main>

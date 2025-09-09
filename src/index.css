@@ -1,3 +1,31 @@
+/* Base Tailwind Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base Body and Typography Styles */
+@layer base {
+  body {
+    @apply bg-neutral-dark text-gray-800 font-body antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-heading text-primary font-extrabold;
+  }
+  p {
+    @apply text-gray-700 leading-relaxed;
+  }
+}
+
+/* Custom Utilities and Components */
+@layer components {
+  /* Fluid gradient background for hero sections or full pages */
+  .bg-gradient-fluid {
+    background: linear-gradient(-45deg, var(--color-primary), var(--color-secondary), var(--color-tertiary));
+    background-size: 400% 400%;
+    @apply animate-fluid-gradient;
+  }
+  /* Smooth transition for all animated elements */
+  .transition-all-300 {
+    transition: all 0.3s ease-in-out;
+  }
+}

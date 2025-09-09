@@ -1,51 +1,64 @@
 import Section from '../components/Section';
 import { motion } from 'framer-motion';
+import { FaPencilRuler, FaTint, FaShippingFast } from 'react-icons/fa';
 
-const portfolioItems = [
-  { img: 'https://images.pexels.com/photos/605408/pexels-photo-605408.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Corporate Branding' },
-  { img: 'https://images.pexels.com/photos/1300327/pexels-photo-1300327.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Wedding Favors' },
-  { img: 'https://images.pexels.com/photos/380954/pexels-photo-380954.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Fitness Club' },
-  { img: 'https://images.pexels.com/photos/1298601/pexels-photo-1298601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Music Festival' },
-  { img: 'https://images.pexels.com/photos/2531180/pexels-photo-2531180.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Charity Event' },
-  { img: 'https://images.pexels.com/photos/2531188/pexels-photo-2531188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', title: 'Hotel & Spa' },
+const processSteps = [
+  {
+    icon: <FaPencilRuler size={50} />,
+    title: 'Design & Consultation',
+    description: 'We collaborate to create a custom label design that embodies your brand’s unique identity and vision.',
+  },
+  {
+    icon: <FaTint size={50} />,
+    title: 'Production & Quality',
+    description: 'Our team meticulously produces and applies your custom labels to our premium bottled water, ensuring perfection.',
+  },
+  {
+    icon: <FaShippingFast size={50} />,
+    title: 'Delivery & Distribution',
+    description: 'Your branded water is carefully delivered to your location, ready to impress at your next event.',
+  },
 ];
 
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.2 },
   },
 };
 
 const itemVariants = {
-  hidden: { scale: 0.8, opacity: 0 },
-  visible: { scale: 1, opacity: 1, transition: { duration: 0.4 } },
+  hidden: { y: 20, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const Portfolio = () => {
   return (
-    <Section id="work">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-heading font-bold text-primary">Our Work</h2>
-        <p className="text-lg text-gray-600 font-sub mt-2">A glimpse into our custom branding.</p>
+    <Section id="work" className="bg-neutral-light py-20">
+      <div className="text-center mb-12 animate-fade-in-up">
+        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-2">Our Work Process</h2>
+        <p className="text-lg md:text-xl text-gray-600 font-body mt-2">Turning your brand vision into a tangible product.</p>
       </div>
       <motion.div 
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid md:grid-cols-3 gap-12"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {portfolioItems.map((item, index) => (
+        {processSteps.map((step, index) => (
           <motion.div 
             key={index} 
-            className="relative rounded-lg overflow-hidden shadow-lg group"
+            className="bg-white p-10 rounded-xl shadow-lg text-center transition-all-300 hover:scale-105 hover:shadow-2xl"
             variants={itemVariants}
           >
-            <img src={item.img} alt={item.title} className="w-full h-64 object-cover" />
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
-              <h3 className="text-white text-2xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-heading">{item.title}</h3>
+            <div className="flex justify-center mb-6">
+              <div className="p-4 rounded-full bg-secondary/20 transition-all-300 hover:bg-secondary/40 text-secondary">
+                {step.icon}
+              </div>
             </div>
+            <h3 className="text-2xl font-heading font-bold text-primary mb-4">{step.title}</h3>
+            <p className="text-gray-600 font-body leading-relaxed">{step.description}</p>
           </motion.div>
         ))}
       </motion.div>

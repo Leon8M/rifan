@@ -23,24 +23,24 @@ const testimonials = [
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.2 },
+    transition: { staggerChildren: 0.2, delayChildren: 0.2 },
   },
 };
 
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const Testimonials = () => {
   return (
-    <Section id="testimonials">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-heading font-bold text-primary">Testimonials</h2>
-        <p className="text-lg text-gray-600 font-sub mt-2">What our clients are saying.</p>
+    <Section id="testimonials" className="bg-neutral-light py-20">
+      <div className="text-center mb-12 animate-fade-in-up">
+        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-2">Testimonials</h2>
+        <p className="text-lg md:text-xl text-gray-600 font-body mt-2">What our clients are saying.</p>
       </div>
       <motion.div 
-        className="grid md:grid-cols-3 gap-8"
+        className="grid md:grid-cols-3 gap-12"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -49,13 +49,19 @@ const Testimonials = () => {
         {testimonials.map((testimonial, index) => (
           <motion.div 
             key={index} 
-            className="bg-neutral-light p-8 rounded-lg shadow-lg"
+            className="bg-white p-10 rounded-xl shadow-lg transition-all-300 hover:scale-105 hover:shadow-2xl"
             variants={itemVariants}
           >
-            <FaQuoteLeft className="text-primary mb-4" size={30} />
-            <p className="text-gray-700 font-body italic mb-4">{testimonial.quote}</p>
-            <p className="font-bold text-primary font-heading">{testimonial.client}</p>
-            <p className="text-gray-500 font-sub">{testimonial.company}</p>
+            <div className="flex justify-start mb-6">
+              <div className="text-primary opacity-20">
+                <FaQuoteLeft size={40} />
+              </div>
+            </div>
+            <p className="text-gray-700 font-body italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
+            <div className="text-left">
+              <p className="font-bold text-primary font-heading">{testimonial.client}</p>
+              <p className="text-gray-500 font-sub text-sm">{testimonial.company}</p>
+            </div>
           </motion.div>
         ))}
       </motion.div>

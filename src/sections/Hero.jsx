@@ -1,10 +1,6 @@
 import { motion } from 'framer-motion';
 
 const Hero = () => {
-  const heroStyle = {
-    backgroundImage: `url('https://images.pexels.com/photos/277253/pexels-photo-277253.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
-  };
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -15,37 +11,42 @@ const Hero = () => {
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
-    <section id="home" className="h-screen bg-cover bg-center bg-no-repeat" style={heroStyle}>
-      <div className="h-full bg-black bg-opacity-50 flex items-center justify-center text-center text-white">
-        <motion.div 
-          className="container mx-auto px-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+    <section id="hero" className="min-h-screen flex items-center justify-center text-center text-white bg-gradient-fluid">
+      <div className="absolute inset-0 bg-primary opacity-80"></div>
+      <motion.div 
+        className="container mx-auto px-4 relative z-10 bg-neutral-dark/10 backdrop-blur-sm p-10 rounded-3xl"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.h1 
+          className="text-5xl md:text-7xl lg:text-8xl font-heading font-extrabold mb-4 animate-fade-in-up text-primary"
+          variants={itemVariants}
         >
-          <motion.h1 
-            className="text-5xl md:text-7xl font-heading font-bold mb-4"
-            variants={itemVariants}
-          >
-            Your Brand, Our Water
-          </motion.h1>
-          <motion.p 
-            className="text-lg md:text-xl font-sub mb-8 max-w-2xl mx-auto"
-            variants={itemVariants}
-          >
-            Premium water, personalized for your events, clubs, and brand.
-          </motion.p>
-          <motion.div variants={itemVariants}>
-            <a href="#contact" className="bg-secondary text-white font-bold py-3 px-8 rounded-full hover:bg-blue-400 transition duration-300 text-lg font-sub">
-              Get a Quote
-            </a>
-          </motion.div>
+          Your Brand, Our Water
+        </motion.h1>
+        <motion.p 
+          className="text-lg md:text-xl font-sub mb-8 max-w-3xl mx-auto animate-fade-in-up text-primary"
+          variants={itemVariants}
+        >
+          Premium water, personalized for your events, businesses, and clubs.
+        </motion.p>
+        <motion.div 
+          className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8"
+          variants={itemVariants}
+        >
+          <a href="#contact" className="bg-accent text-primary font-bold py-3 px-8 rounded-full shadow-lg transition-all-300 hover:scale-105 hover:shadow-xl animate-button-pulse font-sub">
+            Get a Quote
+          </a>
+          <a href="#services" className="border-2 border-primary text-primary font-bold py-3 px-8 rounded-full shadow-lg transition-all-300 hover:bg-primary hover:text-white font-sub">
+            Our Services
+          </a>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
