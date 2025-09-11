@@ -1,30 +1,46 @@
-/* Base Tailwind Directives */
+/* Tailwind Directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base Body and Typography Styles */
+/* Base Styles */
 @layer base {
   body {
-    @apply bg-neutral-dark text-gray-800 font-body antialiased;
+    @apply bg-neutral-dark text-gray-100 font-body antialiased;
   }
   h1, h2, h3 {
-    @apply font-heading text-primary font-extrabold;
+    @apply font-heading text-white font-extrabold tracking-tight;
   }
   p {
-    @apply text-gray-700 leading-relaxed;
+    @apply text-gray-300 leading-relaxed;
   }
 }
 
-/* Custom Utilities and Components */
+/* Custom Utilities & Components */
 @layer components {
-  /* Fluid gradient background for hero sections or full pages */
+  /* Hero background with fluid gradient */
   .bg-gradient-fluid {
-    background: linear-gradient(-45deg, var(--color-primary), var(--color-secondary), var(--color-tertiary));
+    background: linear-gradient(-45deg, #003366, #66B2FF, #00BFA6, #003366);
     background-size: 400% 400%;
     @apply animate-fluid-gradient;
   }
-  /* Smooth transition for all animated elements */
+
+  /* Glassmorphic card */
+  .glass-card {
+    @apply bg-glass-card backdrop-blur-lg shadow-card rounded-2xl border border-white/10 p-6;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply bg-primary text-white px-6 py-3 rounded-xl font-semibold shadow-glow transition-all-300 hover:scale-105 hover:bg-secondary;
+  }
+
+  /* Accent button */
+  .btn-accent {
+    @apply bg-accent text-black px-6 py-3 rounded-xl font-semibold transition-all-300 hover:scale-105 hover:shadow-glow;
+  }
+
+  /* Smooth transitions */
   .transition-all-300 {
     transition: all 0.3s ease-in-out;
   }

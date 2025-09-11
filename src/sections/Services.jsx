@@ -23,23 +23,28 @@ const services = [
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.3, delayChildren: 0.2 },
+    transition: { staggerChildren: 0.25, delayChildren: 0.2 },
   },
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 40, opacity: 0 },
   visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 const Services = () => {
   return (
-    <Section id="services" className="bg-neutral-light py-20">
-      <div className="text-center mb-12 animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-2">Our Services</h2>
-        <p className="text-lg md:text-xl text-gray-600 font-body mt-2">Customized water for every occasion.</p>
+    <Section id="services" className="relative py-24 bg-neutral-light">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">
+          Our Services
+        </h2>
+        <p className="text-lg md:text-xl text-gray-600 font-body max-w-2xl mx-auto">
+          Customized water for <span className="text-tertiary font-semibold">every occasion</span>.
+        </p>
       </div>
-      <motion.div 
+
+      <motion.div
         className="grid md:grid-cols-3 gap-12"
         variants={containerVariants}
         initial="hidden"
@@ -47,18 +52,25 @@ const Services = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         {services.map((service, index) => (
-          <motion.div 
-            key={index} 
-            className="bg-white p-10 rounded-xl shadow-lg text-center transition-all-300 hover:scale-105 hover:shadow-2xl"
+          <motion.div
+            key={index}
+            className="relative group bg-white p-10 rounded-2xl shadow-lg transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
             variants={itemVariants}
           >
-            <div className="flex justify-center mb-6">
-              <div className="p-4 rounded-full bg-secondary/20 transition-all-300 hover:bg-secondary/40 text-secondary">
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-secondary/20 to-tertiary/20 opacity-0 group-hover:opacity-100 blur-xl transition duration-500"></div>
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="p-6 rounded-full bg-secondary/10 group-hover:bg-secondary/30 transition duration-300 text-secondary mb-6">
                 {service.icon}
               </div>
+              <h3 className="text-2xl font-heading font-bold text-primary mb-4">
+                {service.title}
+              </h3>
+              <p className="text-gray-600 font-body leading-relaxed">
+                {service.description}
+              </p>
             </div>
-            <h3 className="text-2xl font-heading font-bold text-primary mb-4">{service.title}</h3>
-            <p className="text-gray-600 font-body leading-relaxed">{service.description}</p>
           </motion.div>
         ))}
       </motion.div>

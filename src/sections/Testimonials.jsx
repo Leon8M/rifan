@@ -34,13 +34,13 @@ const itemVariants = {
 
 const Testimonials = () => {
   return (
-    <Section id="testimonials" className="bg-neutral-light py-20">
-      <div className="text-center mb-12 animate-fade-in-up">
-        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-2">Testimonials</h2>
-        <p className="text-lg md:text-xl text-gray-600 font-body mt-2">What our clients are saying.</p>
+    <Section id="testimonials" className="bg-gradient-to-b from-neutral-light to-white py-20 relative">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-4">Testimonials</h2>
+        <p className="text-lg md:text-xl text-gray-600 font-body">What our clients are saying.</p>
       </div>
       <motion.div 
-        className="grid md:grid-cols-3 gap-12"
+        className="grid md:grid-cols-3 gap-10 relative"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -49,17 +49,19 @@ const Testimonials = () => {
         {testimonials.map((testimonial, index) => (
           <motion.div 
             key={index} 
-            className="bg-white p-10 rounded-xl shadow-lg transition-all-300 hover:scale-105 hover:shadow-2xl"
+            className="relative bg-white p-10 rounded-2xl shadow-lg border border-transparent hover:border-accent/30 hover:shadow-2xl transition-all duration-300"
             variants={itemVariants}
           >
-            <div className="flex justify-start mb-6">
-              <div className="text-primary opacity-20">
-                <FaQuoteLeft size={40} />
-              </div>
-            </div>
-            <p className="text-gray-700 font-body italic mb-6 leading-relaxed">"{testimonial.quote}"</p>
-            <div className="text-left">
-              <p className="font-bold text-primary font-heading">{testimonial.client}</p>
+            {/* Floating quote mark */}
+            <FaQuoteLeft className="absolute -top-6 -left-4 text-primary/10 text-6xl" />
+
+            <p className="text-gray-700 font-body italic mb-6 leading-relaxed relative z-10">
+              "{testimonial.quote}"
+            </p>
+            <div className="text-left relative z-10">
+              <p className="font-bold text-primary font-heading relative inline-block after:content-[''] after:block after:h-0.5 after:bg-accent after:mt-1 after:rounded-full">
+                {testimonial.client}
+              </p>
               <p className="text-gray-500 font-sub text-sm">{testimonial.company}</p>
             </div>
           </motion.div>

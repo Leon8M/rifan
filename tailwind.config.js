@@ -7,39 +7,59 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#003366',
-        'secondary': '#66B2FF',
-        'tertiary': '#008080',
-        'neutral-light': '#F5F5F5',
-        'neutral-dark': '#FFFFFF',
-        'accent': '#FFD700',
+        primary: "#003366",      // Deep ocean blue
+        secondary: "#66B2FF",    // Sky blue
+        tertiary: "#00BFA6",     // Aqua teal
+        accent: "#FFD700",       // Golden highlight
+        neutral: {
+          light: "#F5F5F5",
+          dark: "#0A0A0A",
+        },
+        glass: "rgba(255,255,255,0.08)",
       },
       fontFamily: {
-        'heading': ['Poppins', 'sans-serif'],
-        'body': ['Montserrat', 'sans-serif'],
-        'sub': ['Lato', 'sans-serif'],
+        heading: ["Poppins", "sans-serif"],
+        body: ["Montserrat", "sans-serif"],
+        sub: ["Lato", "sans-serif"],
+      },
+      boxShadow: {
+        glow: "0 0 20px rgba(102, 178, 255, 0.5)",
+        card: "0 8px 30px rgba(0,0,0,0.2)",
+      },
+      backgroundImage: {
+        "gradient-hero": "linear-gradient(135deg, #003366, #66B2FF, #00BFA6)",
+        "glass-card": "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
       },
       keyframes: {
         fadeInSlideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         pulse: {
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.05)' },
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
         },
         fluidGradient: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
       animation: {
-        'fade-in-up': 'fadeInSlideUp 0.8s ease-out forwards',
-        'button-pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'fluid-gradient': 'fluidGradient 15s ease infinite',
+        "fade-in-up": "fadeInSlideUp 0.8s ease-out forwards",
+        "button-pulse": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "fluid-gradient": "fluidGradient 15s ease infinite",
+        "float": "float 6s ease-in-out infinite",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 }
