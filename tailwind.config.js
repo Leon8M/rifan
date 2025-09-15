@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         primary: "#003366",      // Deep ocean blue
-        secondary: "#66B2FF",    // Sky blue
+        secondary: "#59A1D4",    // A slightly darker, richer sky blue
         tertiary: "#00BFA6",     // Aqua teal
         accent: "#FFD700",       // Golden highlight
         neutral: {

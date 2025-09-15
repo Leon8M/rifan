@@ -24,42 +24,44 @@ const About = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* Text content */}
-        <motion.div variants={itemVariants}>
-          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-primary mb-6">
+        {/* Text content card */}
+        <motion.div variants={itemVariants} className="glass-card text-slate-700">
+          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-black mb-6">
             About Us
           </h2>
-          <p className="text-lg text-gray-700 font-body leading-relaxed mb-4">
-            At <span className="font-bold text-secondary">RIFAN</span>, we go beyond water. 
+          <p className="text-lg font-body leading-relaxed mb-4 text-black">
+            At <span className="font-bold text-black">RIFAN</span>, we go beyond water. 
             Our mission is to deliver premium bottled water customized to your brand, 
             whether for businesses, weddings, or events.
           </p>
-          <p className="text-lg text-gray-700 font-body leading-relaxed mb-4">
+          <p className="text-lg font-body leading-relaxed mb-4 text-black">
             We source our water from the pristine springs of 
-            <span className="font-bold text-primary"> Mt. Kenya</span>, 
+            <span className="font-bold text-black"> Mt. Kenya</span>, 
             and purify it through advanced reverse osmosis technology. 
-            Every bottle reflects our promise of <span className="text-secondary font-semibold">
+            Every bottle reflects our promise of <span className="text-black font-semibold">
             quality, freshness, and trust
             </span>.
           </p>
-          <p className="text-lg text-gray-700 font-body leading-relaxed">
+          <p className="text-lg font-body leading-relaxed mb-4 text-black">
             With attention to detail and dedication to service, 
             we ensure your brand leaves a lasting impression on every guest.
           </p>
         </motion.div>
 
-        {/* Image side */}
+        {/* Image side with animated card */}
         <motion.div
-          className="relative rounded-2xl overflow-hidden shadow-2xl"
+          className="relative rounded-3xl overflow-hidden shadow-2xl glass-card"
           variants={itemVariants}
         >
           <img
-            src="/about-water.jpeg" // put your image in public/ or src/assets/
+            src="/about-water.jpeg"
             alt="Pure bottled water from Mt. Kenya"
-            className="w-full h-96 object-cover transform hover:scale-105 transition-transform duration-500"
+            width={800}
+            height={600}
+            className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500 rounded-3xl"
           />
-          {/* Overlay glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-transparent"></div>
+          {/* Subtle overlay glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[--color-primary]/30 via-transparent to-transparent"></div>
         </motion.div>
       </motion.div>
     </Section>

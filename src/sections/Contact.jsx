@@ -1,117 +1,198 @@
-import Section from '../components/Section';
-import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { CheckCircle, XCircle } from 'lucide-react';
+import Button from '../components/Button';
 
-const Contact = () => {
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
+// SuccessModal Component - A self-contained modal for success/error messages
+const SuccessModal = ({ isSuccess, onClose }) => {
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: -20 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
+    exit: { opacity: 0, scale: 0.8, y: 20 }
   };
 
   return (
-    <Section id="contact" className="relative bg-gradient-to-br from-primary/5 via-white to-accent/5 py-20">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-heading font-bold text-primary">
-          Let’s Talk
-        </h2>
-        <p className="text-lg text-gray-600 font-body mt-3">
-          Have a question or want to get started? Drop us a line.
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={modalVariants}
+    >
+      <div className="bg-white rounded-3xl p-8 text-center shadow-2xl max-w-sm w-full">
+        {isSuccess ? (
+          <CheckCircle className="mx-auto h-16 w-16 text-tertiary mb-4 animate-bounce-in" />
+        ) : (
+          <XCircle className="mx-auto h-16 w-16 text-red-500 mb-4 animate-bounce-in" />
+        )}
+        <h3 className="text-2xl font-heading font-bold text-neutral-dark mb-4">
+          {isSuccess ? 'Message Sent!' : 'Error'}
+        </h3>
+        <p className="text-neutral-dark font-body mb-8">
+          {isSuccess
+            ? 'Thank you for contacting us. We will get back to you shortly.'
+            : 'Something went wrong. Please try again later.'}
         </p>
+        <Button onClick={onClose} text="Close" variant="secondary" />
       </div>
+    </motion.div>
+  );
+};
 
-      <motion.div
-        className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-start"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={itemVariants}
-      >
-        {/* Contact Info */}
-        <div className="space-y-6">
-          <div className="flex items-center space-x-4">
-            <div className="p-4 rounded-full bg-primary/10 text-primary shadow-inner">
-              <FaEnvelope size={24} />
-            </div>
-            <p className="text-gray-700 font-body">info@brandwater.co.ke</p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="p-4 rounded-full bg-primary/10 text-primary shadow-inner">
-              <FaPhoneAlt size={24} />
-            </div>
-            <p className="text-gray-700 font-body">+254 700 123 456</p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="p-4 rounded-full bg-primary/10 text-primary shadow-inner">
-              <FaMapMarkerAlt size={24} />
-            </div>
-            <p className="text-gray-700 font-body">
-              Nairobi, Kenya
-            </p>
-          </div>
-        </div>
+const Contact = () => {
+  const formRef = useRef(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(null);
 
-        {/* Contact Form */}
-        <form className="bg-white shadow-xl rounded-2xl p-8 space-y-6 border border-gray-100">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 font-body">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
-                         focus:outline-none focus:ring-2 focus:ring-secondary/60"
-            />
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      console.log('Email sent successfully:', result.text);
+      setIsSuccess(true);
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      setIsSuccess(false);
+    } finally {
+      setIsSubmitting(false);
+      setShowModal(true);
+    }
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: 'easeOut',
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  return (
+    <section 
+      id="contact" 
+      className="py-20 bg-neutral-dark text-white overflow-hidden relative"
+    >
+      {/* Background Fluid Gradient */}
+      <div className="absolute inset-0 z-0 bg-gradient-fluid"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl lg:text-5xl font-heading font-extrabold text-center mb-12"
+        >
+          Let's Talk
+        </motion.h2>
+
+        <motion.form
+          ref={formRef}
+          onSubmit={sendEmail}
+          variants={formVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          className="max-w-3xl mx-auto glass-card text-neutral-dark"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <motion.div variants={itemVariants}>
+              <label htmlFor="user_name" className="block text-sm font-sub mb-2">Name</label>
+              <input 
+                type="text" 
+                id="user_name" 
+                name="name"
+                className="w-full px-4 py-3 rounded-lg bg-white/10 text-neutral-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary/50 border border-white/20 transition-all duration-300"
+                placeholder="Your Name"
+                required
+              />
+            </motion.div>
+            
+            <motion.div variants={itemVariants}>
+              <label htmlFor="user_email" className="block text-sm font-sub mb-2">Email</label>
+              <input 
+                type="email" 
+                id="user_email" 
+                name="email"
+                className="w-full px-4 py-3 rounded-lg bg-white/10 text-neutral-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary/50 border border-white/20 transition-all duration-300" 
+                placeholder="you@example.com"
+                required
+              />
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="md:col-span-2">
+              <label htmlFor="service" className="block text-sm font-sub mb-2">Service of Interest</label>
+              <div className="relative">
+                <select 
+                  id="service" 
+                  name="service"
+                  className="w-full px-4 py-3 rounded-lg bg-white/10 text-neutral-dark appearance-none focus:outline-none focus:ring-2 focus:ring-secondary/50 border border-white/20 transition-all duration-300"
+                  required
+                >
+                  <option className="bg-neutral-dark text-white">Select a Service</option>
+                  <option className="bg-neutral-dark text-white" value="Weddings">Weddings</option>
+                  <option className="bg-neutral-dark text-white" value="Events">Events</option>
+                  <option className="bg-neutral-dark text-white" value="Clubs & Organizations">Clubs & Organizations</option>
+                </select>
+                {/* Custom dropdown arrow to ensure visibility */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                  </svg>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div variants={itemVariants} className="md:col-span-2">
+              <label htmlFor="message" className="block text-sm font-sub mb-2">Message</label>
+              <textarea 
+                id="message" 
+                name="message"
+                rows={5} 
+                className="w-full px-4 py-3 rounded-lg bg-white/10 text-neutral-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary/50 border border-white/20 transition-all duration-300"
+                placeholder="Tell us about your project..."
+                required
+              ></textarea>
+            </motion.div>
           </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 font-body">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
-                         focus:outline-none focus:ring-2 focus:ring-secondary/60"
-            />
-          </div>
-          <div>
-            <label htmlFor="service" className="block text-sm font-medium text-gray-700 font-body">
-              Service of Interest
-            </label>
-            <select
-              id="service"
-              className="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
-                         focus:outline-none focus:ring-2 focus:ring-secondary/60"
-            >
-              <option>Corporate Events</option>
-              <option>Weddings & Parties</option>
-              <option>Clubs & Organizations</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 font-body">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows="4"
-              className="mt-1 block w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
-                         focus:outline-none focus:ring-2 focus:ring-secondary/60"
-            ></textarea>
-          </div>
-          <div className="text-center">
-            <button
+          
+          <motion.div variants={itemVariants} className="text-center mt-8">
+            <Button 
+              text={isSubmitting ? 'Sending...' : 'Submit Inquiry'} 
+              variant="secondary"
               type="submit"
-              className="bg-secondary text-white font-bold py-3 px-10 rounded-full 
-                         hover:bg-blue-400 transition duration-300 text-lg font-body shadow-lg"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </motion.div>
-    </Section>
+            />
+          </motion.div>
+        </motion.form>
+      </div>
+      
+      <AnimatePresence>
+        {showModal && (
+          <SuccessModal isSuccess={isSuccess} onClose={() => setShowModal(false)} />
+        )}
+      </AnimatePresence>
+    </section>
   );
 };
 
