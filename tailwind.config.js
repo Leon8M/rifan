@@ -13,7 +13,7 @@ export default {
         accent: "#FFD700",       // Golden highlight
         neutral: {
           light: "#F5F5F5",
-          dark: "#0A0A0A",
+          dark: "#FFFFFF", // Reverted to a light background color
         },
         glass: "rgba(255,255,255,0.08)",
       },
@@ -29,6 +29,7 @@ export default {
       backgroundImage: {
         "gradient-hero": "linear-gradient(135deg, #003366, #66B2FF, #00BFA6)",
         "glass-card": "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
+        "gradient-fluid": "linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-tertiary))",
       },
       keyframes: {
         fadeInSlideUp: {
@@ -62,4 +63,4 @@ export default {
     require("@tailwindcss/forms"),
     require("@tailwindcss/aspect-ratio"),
   ],
-}
+};

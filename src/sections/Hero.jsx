@@ -1,9 +1,12 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import Button from '../components/Button';
+import React from 'react';
 
 // SVG icons for floating animation
 const WaterDropIcon = ({ size, color, className }) => (
-  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
     <path 
       d="M12 21C12 21 4 12.186 4 8.5C4 4.977 7.582 2 12 2C16.418 2 20 4.977 20 8.5C20 12.186 12 21 12 21Z" 
       stroke={color} 
@@ -15,7 +18,7 @@ const WaterDropIcon = ({ size, color, className }) => (
 );
 
 const BubbleIcon = ({ size, color, className }) => (
-  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
     <circle cx="12" cy="12" r="4" stroke={color} strokeWidth="2" />
   </svg>
@@ -35,59 +38,68 @@ const Hero = () => {
     visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  const floatVariants = {
-    animate: (i) => ({
-      y: [0, -30, 0],
-      x: [0, 20, 0],
-      rotate: [0, 360],
-      opacity: [0, 0.5, 0],
-      scale: [0, 1, 0.8],
-      transition: {
-        duration: 20 + Math.random() * 20,
-        repeat: Infinity,
-        repeatType: "loop",
-        ease: "easeInOut",
-        delay: i * 2,
-      },
+  const riseVariants = {
+    initial: (i) => ({
+      y: `calc(100vh + ${Math.random() * 200}px)`,
+      x: `${(Math.random() - 0.5) * 500}px`,
+      scale: Math.random() * 0.5 + 0.5,
+      opacity: 0,
     }),
+    animate: {
+      y: `-10vh`,
+      opacity: [0, 0.8, 0],
+      scale: [1, 1.2, 1],
+      transition: {
+        y: {
+          duration: Math.random() * 40 + 20,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "linear",
+        },
+        opacity: {
+          duration: Math.random() * 40 + 20,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "linear",
+        },
+        scale: {
+          duration: Math.random() * 2 + 1,
+          repeat: Infinity,
+          repeatType: "mirror",
+        },
+      },
+    },
   };
 
-  const icons = [
-    { component: WaterDropIcon, size: 40, color: 'var(--color-secondary)' },
-    { component: BubbleIcon, size: 60, color: 'var(--color-tertiary)' },
-    { component: WaterDropIcon, size: 50, color: 'var(--color-accent)' },
-    { component: BubbleIcon, size: 30, color: 'var(--color-secondary)' },
-    { component: WaterDropIcon, size: 70, color: 'var(--color-tertiary)' },
-    { component: BubbleIcon, size: 45, color: 'var(--color-accent)' },
-  ];
+  const icons = Array.from({ length: 40 }).map((_, i) => ({
+    component: i % 2 === 0 ? WaterDropIcon : BubbleIcon,
+    size: Math.random() * 40 + 20,
+    color: ['rgba(102, 178, 255, 0.6)', 'rgba(0, 191, 166, 0.6)', 'rgba(255, 215, 0, 0.6)'][Math.floor(Math.random() * 3)],
+  }));
 
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center text-center overflow-hidden"
     >
-      {/* Dynamic Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-fluid animate-gradient-flow"></div>
+      <div className="absolute inset-0 bg-gradient-fluid animate-fluid-gradient"></div>
       
-      {/* Floating Icons */}
       {icons.map((icon, i) => (
         <motion.div
           key={i}
-          variants={floatVariants}
+          variants={riseVariants}
           custom={i}
-          initial="animate"
+          initial="initial"
           animate="animate"
           className="absolute z-0"
-          style={{ 
-            top: `${Math.random() * 100}vh`, 
+          style={{
             left: `${Math.random() * 100}vw`,
           }}
         >
-          <icon.component size={icon.size} color={icon.color} className="opacity-0"/>
+          <icon.component size={icon.size} color={icon.color}/>
         </motion.div>
       ))}
 
-      {/* Main Content */}
       <motion.div
         className="container mx-auto px-6 relative z-10 glass-card p-10 md:p-16 rounded-3xl shadow-2xl max-w-5xl"
         variants={containerVariants}
@@ -113,8 +125,8 @@ const Hero = () => {
           className="flex flex-col sm:flex-row justify-center items-center gap-6"
           variants={itemVariants}
         >
-          <Button href="#contact" text="Get a Quote" variant="secondary" />
-          <Button href="#services" text="Our Services" variant="primary" />
+          <Button text="Get a Quote" href="#contact" variant="secondary" />
+          <Button text="Our Services" href="#services" variant="primary" />
         </motion.div>
       </motion.div>
     </section>
