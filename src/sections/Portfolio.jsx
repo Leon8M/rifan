@@ -72,7 +72,7 @@ const Portfolio = () => {
             {/* Icon with soft bubble */}
             <div className="flex justify-center mb-6 relative z-10">
               <div className="p-6 rounded-full bg-gradient-to-tr from-primary/10 to-accent/10 backdrop-blur-sm shadow-inner">
-                <div className="text-primary/80">{step.icon}</div>
+                <div className="text-secondary/80">{step.icon}</div>
               </div>
             </div>
 

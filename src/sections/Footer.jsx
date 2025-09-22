@@ -21,7 +21,12 @@ const Footer = () => {
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid md:grid-cols-3 gap-10 text-center md:text-left">
           <div>
-            <h3 className="text-3xl font-heading font-bold mb-3">RIFAN</h3>
+            {/* Replaced text with logo */}
+            <img 
+              src="/logo.png"
+              alt="RIFAN Logo"
+              className="h-20 w-auto mx-auto md:mx-0 mb-3"
+            />
             <p className="text-gray-300 font-sub">
               &copy; {new Date().getFullYear()} RIFAN. All Rights Reserved.
             </p>

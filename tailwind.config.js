@@ -8,9 +8,9 @@ export default {
     extend: {
       colors: {
         primary: "#003366",      // Deep ocean blue
-        secondary: "#59A1D4",    // A slightly darker, richer sky blue
+        secondary: "	#50C878",    // A slightly darker, richer sky blue
         tertiary: "#00BFA6",     // Aqua teal
-        accent: "#FFD700",       // Golden highlight
+        accent: "	#7CFC00",      // A vibrant lime green
         neutral: {
           light: "#F5F5F5",
           dark: "#FFFFFF", // Reverted to a light background color
@@ -27,7 +27,7 @@ export default {
         card: "0 8px 30px rgba(0,0,0,0.2)",
       },
       backgroundImage: {
-        "gradient-hero": "linear-gradient(135deg, #003366, #66B2FF, #00BFA6)",
+        "gradient-hero": "linear-gradient(135deg, #003366, #66B2FF, #50C878)",
         "glass-card": "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
         "gradient-fluid": "linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-tertiary))",
       },

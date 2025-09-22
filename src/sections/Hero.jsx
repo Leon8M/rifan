@@ -9,7 +9,7 @@ const WaterDropIcon = ({ size, color, className }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
     <path 
       d="M12 21C12 21 4 12.186 4 8.5C4 4.977 7.582 2 12 2C16.418 2 20 4.977 20 8.5C20 12.186 12 21 12 21Z" 
-      stroke={color} 
+      stroke="rgba(255, 255, 255, 0.3)" 
       strokeWidth="2" 
       strokeLinecap="round" 
       strokeLinejoin="round" 
@@ -19,8 +19,8 @@ const WaterDropIcon = ({ size, color, className }) => (
 
 const BubbleIcon = ({ size, color, className }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill={color} xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" />
-    <circle cx="12" cy="12" r="4" stroke={color} strokeWidth="2" />
+    <circle cx="12" cy="12" r="10" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="2" />
+    <circle cx="12" cy="12" r="4" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="2" />
   </svg>
 );
 
@@ -38,16 +38,16 @@ const Hero = () => {
     visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  const riseVariants = {
+  const fallVariants = {
     initial: (i) => ({
-      y: `calc(100vh + ${Math.random() * 200}px)`,
+      y: `-10vh`,
       x: `${(Math.random() - 0.5) * 500}px`,
       scale: Math.random() * 0.5 + 0.5,
-      opacity: 0,
+      opacity: 0.7,
     }),
     animate: {
-      y: `-10vh`,
-      opacity: [0, 0.8, 0],
+      y: `110vh`,
+      opacity: [0.7, 1, 0.7],
       scale: [1, 1.2, 1],
       transition: {
         y: {
@@ -71,10 +71,10 @@ const Hero = () => {
     },
   };
 
-  const icons = Array.from({ length: 40 }).map((_, i) => ({
+  const icons = Array.from({ length: 50 }).map((_, i) => ({
     component: i % 2 === 0 ? WaterDropIcon : BubbleIcon,
     size: Math.random() * 40 + 20,
-    color: ['rgba(102, 178, 255, 0.6)', 'rgba(0, 191, 166, 0.6)', 'rgba(255, 215, 0, 0.6)'][Math.floor(Math.random() * 3)],
+    color: ['rgba(0, 51, 102, 0.8)', 'rgba(89, 161, 212, 0.8)', 'rgba(0, 191, 166, 0.8)'][Math.floor(Math.random() * 3)],
   }));
 
   return (
@@ -87,13 +87,14 @@ const Hero = () => {
       {icons.map((icon, i) => (
         <motion.div
           key={i}
-          variants={riseVariants}
+          variants={fallVariants}
           custom={i}
           initial="initial"
           animate="animate"
           className="absolute z-0"
           style={{
             left: `${Math.random() * 100}vw`,
+            top: `${Math.random() * 100}vh`,
           }}
         >
           <icon.component size={icon.size} color={icon.color}/>

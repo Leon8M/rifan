@@ -54,8 +54,8 @@ const Header = () => {
             <img
               src="/logo.png"
               alt="RIFAN logo"
-              className={`h-16 w-auto transition-transform duration-300 hover:scale-105 drop-shadow-lg ${
-                scroll ? "[filter:drop-shadow(0_0_2px_#003366)]" : "[filter:drop-shadow(0_0_2px_white)]"
+              className={`h-16 w-auto transition-transform duration-300 hover:scale-105 ${
+                !scroll ? "[filter:drop-shadow(0_0_2px_white)]" : ""
               }`}
             />
           </a>

@@ -5,18 +5,18 @@ import { FaQuoteLeft } from 'react-icons/fa';
 const testimonials = [
   {
     quote: 'The custom water bottles were a huge hit at our conference. The quality and service from RIFAN were exceptional.',
-    client: 'John Doe',
-    company: 'Tech Corp',
+    client: 'Michael Mwenda',
+    company: 'Tech Innovators Ltd',
   },
   {
     quote: 'RIFAN added such a classy, personal touch to our wedding. Our guests loved the custom labels!',
-    client: 'Jane Smith',
+    client: 'Aisha and John',
     company: 'Newlyweds',
   },
   {
     quote: 'Fast, reliable, and a fantastic product. Our club members were thrilled with the branded water bottles.',
-    client: 'Sam Wilson',
-    company: 'City Runners Club',
+    client: 'Mary Kamau',
+    company: 'City Sports Club',
   },
 ];
 
